@@ -1,6 +1,6 @@
 import psycopg2
 
-conn = psycopg2.connect(database="data_bases_sophie", user="postgres", password="(LilBoPeep2017)")
+conn = psycopg2.connect(database="data_bases_sophie", user="postgres", password="")
 
 def delete_table_info(conn):
     with conn.cursor() as cur:
