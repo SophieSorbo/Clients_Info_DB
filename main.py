@@ -1,6 +1,6 @@
 import psycopg2
 
-conn = psycopg2.connect(database="data_bases_sophie", user="postgres", password="(LilBoPeep2017)")
+conn = psycopg2.connect(database="data_bases_sophie", user="postgres", password="")
 
 def delete_table_info(conn):
     with conn.cursor() as cur:
@@ -94,11 +94,13 @@ def delete_info_client(conn, id):
         conn.commit()
 
 
-def get_info_client(conn, object, data):
+def get_info_client(conn, column, value):
     with conn.cursor() as cur:
-        cur.execute("""
-        SELECT * FROM clients_info WHERE %s=%s;
-        """, (object, data))
+        cur.execute('''
+        SELECT * FROM clients_info ci
+        LEFT JOIN client_phones cp ON ci.id=cp.client_id
+        WHERE {}=%s;
+        '''.format(column), (value,))
         return cur.fetchall()
 
 
